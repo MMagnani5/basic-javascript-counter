@@ -1,5 +1,5 @@
 // global variables
-var secondsRemainig;
+var secondsRemaining;
 var intervalHandle;
 
 function resetPage(){
@@ -7,7 +7,7 @@ function resetPage(){
 }
 function tick () {
   // grab h1
-  var timeDisplay = document.getElementsById('time');
+  var timeDisplay = document.getElementById("time");
   // turn seconds into mm:ss
   var min = Math.floor(secondsRemainig / 60);
 
@@ -17,6 +17,17 @@ function tick () {
   if (sec < 10){
     sec = "0" + sec;
   }
+  // concatenate with colon
+    var message = min + ":" + sec;
+    // now change the display
+    timeDisplay.innerHTML = message;
+    
+    // stop if down to zero
+    if (secondsRemaining === 0) {
+        alert("Done!");
+        clearInterval(intervalHandle);
+        resetPage();
+    }
   //subtract from seconds remaining
   secondsRemainig--;
 }
@@ -36,4 +47,22 @@ function startCountdown() {
   // hide the form
   document.getElementById('inputArea').style.display = "none";
 }
+
+window.onload = function() {
+  //create input text box and give it an id of minutes
+var inputMinutes = document.createElement('input');
+inputMinutes.setAttribute("id", "minutes");
+
+inputMinutes.setAttribute("type", "text");
+//create a button
+var startButton = document.createElement("input");
+startButton.setAttribute("type", "button");
+startButton.setAttribute("value", "Start Countdown");
+startButton.onclick = function (){
+    startCountdown();
+};
+// add the DOM to call the div in the "inputArea"
+document.getElementById('inputArea').appendChild(inputMinutes);
+document.getElementById('inputArea').appendChild(startButton);
+};
 
